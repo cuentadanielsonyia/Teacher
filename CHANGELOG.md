@@ -47,3 +47,9 @@
 - Por qué: T02, base deploy. Coste cero (Hobby, sin Postgres aún).
 - Test: `vercel project ls`, `Test-Path .vercel`.
 - Resultado: OK parcial. GitHub connect falló (falta Vercel GitHub App OAuth) — pendiente manual. T03 Postgres sin CLI (`storage` no existe en CLI 53.4) — pendiente crear vía dashboard free tier.
+
+## 2026-09-26 — T03+T04 SQLite + Drizzle OK (pivote coste cero)
+- Qué: `drizzle-orm + better-sqlite3 + drizzle-kit` (free). `src/db/schema.ts`, `src/db/index.ts`, `drizzle.config.ts`, `.env.local`, `drizzle/0000_curved_iceman.sql` aplicado a `data/teacher.db` (gitignored).
+- Por qué: restricción activa coste cero + `vercel storage` sin CLI. Pivote aprobado `Usar SQLite`.
+- Test: `drizzle-kit generate/migrate` OK, `node scripts/check-db.mjs` 4 tablas, `npm run build` Next 16.3.6 OK.
+- Resultado: OK local. Limitación: SQLite no persiste en Vercel serverless — prod requerirá Turso/Neon free (cero coste) posterior. GitHub connect Vercel sigue bloqueado (2 intentos CLI 400) — requiere 1 clic tuyo en Edge (`teacher/settings/git` + `github.com/apps/vercel` ya abiertos).

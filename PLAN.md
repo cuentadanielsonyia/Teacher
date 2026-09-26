@@ -29,12 +29,13 @@ Repo: `https://github.com/cuentadanielsonyia/Teacher.git` (branch `main`, checkp
   - `GET /api/lesson/next` → lee agregados, elige skill/categoría con peso, genera o elige ejercicio (banco local JSON en MVP, LLM después).
   - `POST /api/lesson/grade` body `{prompt, answer, skill, category}` → corrige (reglas locales MVP + LLM opcional), guarda `attempt`, actualiza `vocab`, devuelve `{correct, corrections[], nextDifficulty}`.
   - `GET /api/progress` → agregados para dashboard.
-- **DB (Vercel Postgres + Drizzle ORM):**
+- **DB (SQLite local + Drizzle ORM, pivote coste cero 2026-09-26 — sustituye Vercel Postgres):**
   - `profile(id=1, level TEXT, streak INT, last_study DATE)`
-  - `attempts(id SERIAL, skill TEXT, category TEXT, prompt TEXT, answer TEXT, correct BOOL, created_at TIMESTAMPTZ)`
-  - `vocab(word PK, seen INT, mastered BOOL, next_review DATE)`
-  - `sessions(id SERIAL, started TIMESTAMPTZ, duration_sec INT)`
-  - Drizzle: `src/db/schema.ts`, `drizzle.config.ts`, migraciones en `drizzle/`. `POSTGRES_URL` en `.env.local` + Vercel env (requiere confirmación al provisionar).
+  - `attempts(id INTEGER PK, skill TEXT, category TEXT, prompt TEXT, answer TEXT, correct INT, created_at TEXT)`
+  - `vocab(word PK, seen INT, mastered INT, next_review DATE)`
+  - `sessions(id INTEGER PK, started TEXT, duration_sec INT)`
+  - Drizzle sqlite: `src/db/schema.ts`, `drizzle.config.ts`, `data/teacher.db` (gitignored, coste cero).
+  - **Limitación:** SQLite en fichero NO persiste en Vercel serverless (FS efímero). DoD prod requerirá Turso/Neon free (cero coste) en fase posterior. MVP local sí persiste tras recarga.
 - **Adaptación v1 (simple, verificable):**
   - `peso_cat = error_rate_cat*2 + (1-mastery_skill)`. Elige max peso.
   - Si `>=3 aciertos seguidos` en skill → `dificultad+1` (B1→B1+→B2).

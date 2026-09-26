@@ -12,12 +12,15 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Aceptación: `vercel project ls` muestra `teacher`, preview URL responde.
   - Dep: T01.
   - Resultado: OK parcial 2026-09-26, `daniel-ia/teacher` creado y linkado (`.vercel/`), `project ls` lo lista. GitHub auto-connect falló (requiere Vercel GitHub App OAuth) — pendiente manual `vercel.link/git`.
-- [ ] T03 Provisionar Vercel Postgres + `POSTGRES_URL` en `.env.local` y Vercel env (CONFIRMAR)
-  - Aceptación: `vercel env pull` trae `POSTGRES_URL`, conexión `SELECT 1` OK.
+- [x] T03 SQLite local coste cero + `DATABASE_URL` en `.env.local` (pivote desde Postgres por restricción coste cero)
+  - Aceptación: `data/teacher.db` se crea, `SELECT 1` OK, `.env.local` sin secretos pagos.
   - Dep: T02.
-- [ ] T04 Drizzle ORM + schema `profile, attempts, vocab, sessions` + migraciones
-  - Aceptación: `drizzle-kit generate + migrate` OK, tablas existen, `db:studio` abre.
+  - Resultado: OK 2026-09-26, 4 tablas + `__drizzle_migrations`.
+- [x] T04 Drizzle ORM sqlite + schema `profile, attempts, vocab, sessions` + migraciones
+  - Aceptación: `drizzle-kit generate + migrate` OK, tablas existen.
   - Dep: T03.
+  - Resultado: OK 2026-09-26, `drizzle/0000_curved_iceman.sql` aplicado.
+  - Nota: no persiste en Vercel serverless (pendiente Turso free para prod).
 
 ## Fase 4 — Dominio adaptativo
 - [ ] T05 `lib/adapt.ts`: peso categoría + subida dificultad tras 3 aciertos + SRS `2^fallos`

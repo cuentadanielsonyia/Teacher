@@ -69,6 +69,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [x] T16 Skills elegibles + speaking avanzado (post-MVP)
   - Aceptación: 21/21 vitest, filtros mode/skill/category OK, `/practice` 200, build OK.
   - Resultado: OK 2026-09-26. `lib/modes.ts`, `lib/useSpeech.ts` (TTS+STT con errores guiados), `/practice` con Speaking (conversación multi-turno con voz + lectura puntuada %), Listening (velocidad, replays, transcripción), Writing/Reading; 54 ejercicios nuevos (banco 193); `next` con `mode/skill/category` y `speak/passage`; todo Web Speech API gratis sin cuentas.
+- [x] T17 Feedback audible bilingüe en conversación (post-MVP)
+  - Aceptación: build OK, `/practice` 200, corrección EN + consejo ES hablados y visibles.
+  - Resultado: OK 2026-09-26. `speak(text, {lang})` con voz EN/ES, turno de feedback con 🔊 reescuchable.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

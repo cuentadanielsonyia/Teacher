@@ -47,7 +47,7 @@ export default function ListeningFlow() {
     }
     setPlaying(true);
     try {
-      await speak(ex.speak, rate);
+      await speak(ex.speak, { rate });
       setPlays((p) => p + 1);
     } catch {
       setError("No pude reproducir el audio: reintenta.");

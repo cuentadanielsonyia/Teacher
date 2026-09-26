@@ -35,13 +35,11 @@ export function sttSupported(): boolean {
   );
 }
 
-function pickVoice(): SpeechSynthesisVoice | null {
+function pickVoice(lang = "en"): SpeechSynthesisVoice | null {
   const voices = window.speechSynthesis.getVoices();
   return (
-    voices.find((v) => v.lang.startsWith("en-US")) ??
-    voices.find((v) => v.lang.startsWith("en")) ??
-    voices[0] ??
-    null
+    voices.find((v) => v.lang.toLowerCase().startsWith(lang.toLowerCase())) ??
+    (lang === "en" ? (voices.find((v) => v.lang.startsWith("en")) ?? voices[0] ?? null) : null)
   );
 }
 
@@ -56,19 +54,21 @@ async function voicesReady(): Promise<void> {
   });
 }
 
-/** Lee un texto en inglés en voz alta. */
-export async function speak(text: string, rate = 0.95): Promise<void> {
+/** Lee un texto en voz alta. `lang`: "en" (defecto) o "es" para consejos en español. */
+export async function speak(text: string, opts?: { rate?: number; lang?: string }): Promise<void> {
   if (!ttsSupported()) throw new Error("tts-unsupported");
+  const rate = opts?.rate ?? 0.95;
+  const lang = opts?.lang ?? "en";
   window.speechSynthesis.cancel();
   await voicesReady();
   await new Promise<void>((resolve, reject) => {
     const u = new SpeechSynthesisUtterance(text);
-    const v = pickVoice();
+    const v = pickVoice(lang);
     if (v) {
       u.voice = v;
       u.lang = v.lang;
     } else {
-      u.lang = "en-US";
+      u.lang = lang === "es" ? "es-ES" : "en-US";
     }
     u.rate = rate;
     u.onend = () => resolve();

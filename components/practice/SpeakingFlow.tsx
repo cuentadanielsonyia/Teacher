@@ -124,9 +124,21 @@ function Conversation() {
       const g = await sendGrade(current.id, transcript.trim());
       setGrade(g);
       setSpokenWords((w) => w + transcript.trim().split(/\s+/).length);
-      setTurns((t) => [...t, { from: "tu", text: transcript.trim() }]);
+      // Feedback visible Y audible: corrección en inglés + consejo en español
+      const mainEn = g.correct
+        ? `${PRAISE[Math.floor(Math.random() * PRAISE.length)]}`
+        : `The correct answer is: ${g.expected}.`;
+      const feedbackText = g.tip ? `${mainEn} — Consejo: ${g.tip}` : mainEn;
+      setTurns((t) => [...t, { from: "tu", text: transcript.trim() }, { from: "profe", text: `🔊 ${feedbackText}` }]);
       stopSpeaking();
-      await say(g.correct ? PRAISE[Math.floor(Math.random() * PRAISE.length)] : "Good effort. Let's keep going.");
+      if (voiceOn) {
+        try {
+          await speak(mainEn, { lang: "en" });
+          if (g.tip) await speak(`Consejo: ${g.tip}`, { lang: "es" });
+        } catch {
+          /* el turno queda visible con 🔊 para reescuchar */
+        }
+      }
       const n = await loadPrompt();
       setTurns((t) => [...t, { from: "profe", text: n.prompt }]);
       await say(n.prompt);

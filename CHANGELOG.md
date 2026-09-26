@@ -29,3 +29,15 @@
 - Por qué: Aprobación explícita 2026-09-26 (3 MCP).
 - Test: `node JSON.parse opencode.json` valid. `opencode mcp list` no disponible en PATH (CLI no instalado), pendiente verificar tras reinicio OpenCode.
 - Resultado: OK parcial. Siguiente: `opencode mcp auth github` (OAuth navegador Edge) y `DATABASE_URL` tras T03.
+
+## 2026-09-26 — skills: english-coach instalada (alternativa)
+- Qué: `npx skills add tianmind-studio/english-coach -a opencode` → `.agents/skills/english-coach`. Total 7 skills.
+- Por qué: `openclaw/skills:language-learning` falló (auth), aprobada alternativa `english-coach`.
+- Test: `SKILL.md` existe, Safe/Low.
+- Resultado: OK.
+
+## 2026-09-26 — T01 scaffold Next.js OK (coste cero)
+- Qué: `create-next-app teacher` en temp + copia a `Teacher/` (sin `.git/node_modules/.next`). `npm install`, `npm run build` Next 16.3.6 OK.
+- Archivos: `app/`, `public/`, `package.json`, `tsconfig.json`, `next.config.ts`, etc.
+- Test: `npm run build` compiled successfully, 4/4 static pages. `npm run dev` pendiente verificación manual `/` 200.
+- Resultado: OK. Coste cero verificado (solo Hobby free, sin añadidos pago).

@@ -4,9 +4,10 @@ Leyenda: `[ ] pendiente` / `[x] hecha`. Cada tarea: descripción, aceptación, d
 Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Vercel link, Postgres, secretos) requiere confirmación explícita.
 
 ## Fase 3 — Scaffold y base
-- [ ] T01 Scaffold Next.js App Router + TS + Tailwind en `Teacher/`
+- [x] T01 Scaffold Next.js App Router + TS + Tailwind en `Teacher/`
   - Aceptación: `npm run dev` arranca, `/` responde 200, `npm run build` OK.
   - Dep: ninguna.
+  - Resultado: OK 2026-09-26, `npm run build` Next 16.3.6 OK, coste cero (solo deps npm free).
 - [ ] T02 `vercel link` + crear proyecto Vercel en scope `daniel-ia` (CONFIRMAR)
   - Aceptación: `vercel project ls` muestra `teacher`, preview URL responde.
   - Dep: T01.

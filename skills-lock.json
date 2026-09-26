@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "english-coach": {
+      "source": "tianmind-studio/english-coach",
+      "sourceType": "github",
+      "skillPath": "english-coach/SKILL.md",
+      "computedHash": "f973184dc4d5e987a39fa6c6ba48d7bd57cf8532ea0b2746ff68edc146c14316"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",

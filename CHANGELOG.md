@@ -58,3 +58,8 @@
 - Qué: `lib/adapt.ts` (peso, level-up >=3, SRS) + `lib/adapt.test.ts` 6 casos + `vitest` + `@types/node@24` (fix peer).
 - Test: `npx vitest run lib/adapt.test.ts` 6 passed.
 - Resultado: OK. Coste cero.
+
+## 2026-09-26 — T02 GitHub conectado + T06-T09 APIs OK
+- Qué: `vercel git connect` → `already connected`. `data/exercises.json` 32 ejercicios, `lib/exercises.ts` zod, `app/api/lesson/next|grade`, `app/api/progress`. `zod` verificado.
+- Test: `npm run build` 3 routes dinámicas OK. Integración `:3100`: `next(g06 articles)` → `grade wrong→correct:false` → `progress total:1 errorsTop:articles`. DB limpiada a 0 intentos.
+- Resultado: OK. Ciclo MVP sin UI completo.

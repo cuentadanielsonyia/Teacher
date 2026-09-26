@@ -60,6 +60,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [x] T13 Pulido diseño + usabilidad (post-MVP)
   - Aceptación: build OK, `/`, `/lesson`, `/progress` 200, UI en español con dark mode.
   - Resultado: OK 2026-09-26. Header/nav + hero home, lección con chips/contador/racha/Ctrl+Enter/skeletons, progreso con anillo/barras/empty-state.
+- [x] T14 Adaptación cableada + tests corrector (post-MVP)
+  - Aceptación: 12/12 vitest, level-up B1→B1+ tras 3 seguidas verificado, SRS review:true verificado, build OK.
+  - Resultado: OK 2026-09-26. `lib/grade.ts` + tests, `grade` con racha/level-up/SRS, `next` con repaso vencido + perfil, banner de nivel en UI.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

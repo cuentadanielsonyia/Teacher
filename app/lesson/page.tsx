@@ -22,6 +22,8 @@ interface Grade {
   corrections: Correction[];
   skill: string;
   category: string;
+  streak: number;
+  leveledUp: string | null;
 }
 
 const SKILL_LABEL: Record<string, string> = {
@@ -221,6 +223,11 @@ export default function LessonPage() {
           {grade.correct && streak >= 3 && (
             <p className="mt-2 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
               ⬆️ ¡{streak} seguidas! El profe subirá la dificultad.
+            </p>
+          )}
+          {grade.leveledUp && (
+            <p className="mt-2 rounded-2xl bg-emerald-600 p-3 text-center text-sm font-extrabold text-white">
+              🎓 ¡Nivel nuevo: {grade.leveledUp}! Los próximos ejercicios serán de ese nivel.
             </p>
           )}
           <button

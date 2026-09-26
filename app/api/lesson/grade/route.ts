@@ -1,13 +1,13 @@
 import { db } from "@/src/db";
-import { attempts, vocab } from "@/src/db/schema";
-import { eq } from "drizzle-orm";
+import { attempts, profile, vocab } from "@/src/db/schema";
+import { desc, eq } from "drizzle-orm";
+import { nextDifficulty, nextReviewDate, type Difficulty } from "@/lib/adapt";
 import { findExercise } from "@/lib/exercises";
+import { gradeAnswer, normalize } from "@/lib/grade";
 
-function norm(s: string): string {
-  return s.trim().toLowerCase().replace(/[.,!?;:"'¡¿]/g, "").replace(/\s+/g, " ");
+function today(): string {
+  return new Date().toISOString().slice(0, 10);
 }
-
-const OPEN_SKILLS = new Set(["conversacion", "writing"]);
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -16,14 +16,7 @@ export async function POST(request: Request) {
   const ex = findExercise(id);
   if (!ex) return Response.json({ error: "unknown exercise" }, { status: 400 });
 
-  const expected = norm(ex.answer);
-  const given = norm(answer);
-  let correct = given === expected;
-  let note: string | null = null;
-  if (!correct && OPEN_SKILLS.has(ex.skill) && given.length >= 12) {
-    correct = true;
-    note = "Respuesta abierta aceptada (revisión ligera en MVP).";
-  }
+  const { correct, note } = gradeAnswer(ex.skill, ex.answer, answer);
 
   await db.insert(attempts).values({
     skill: ex.skill,
@@ -34,15 +27,48 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString(),
   });
 
+  // Racha global (últimos intentos, el recién guardado primero)
+  const recent = await db.select().from(attempts).orderBy(desc(attempts.id)).limit(10);
+  let run = 0;
+  for (const a of recent) {
+    if (a.correct === 1) run += 1;
+    else break;
+  }
+
+  // Subida de dificultad al encadenar exactamente 3 (edge-trigger, especificación T05)
+  let leveledUp: string | null = null;
+  if (run === 3) {
+    const prof = await db.select().from(profile);
+    const current = (prof[0]?.level ?? "B1") as Difficulty;
+    const next = nextDifficulty(current, run);
+    if (next !== current) {
+      if (prof.length === 0) {
+        await db.insert(profile).values({ id: 1, level: next, streak: 0, lastStudy: null });
+      } else {
+        await db.update(profile).set({ level: next }).where(eq(profile.id, 1));
+      }
+      leveledUp = next;
+    }
+  }
+
   if (ex.skill === "vocabulario") {
-    const word = expected;
+    const word = normalize(ex.answer);
     const existing = await db.select().from(vocab).where(eq(vocab.word, word));
     if (existing.length === 0) {
-      await db.insert(vocab).values({ word, seen: 1, mastered: correct ? 1 : 0, nextReview: null });
+      await db.insert(vocab).values({
+        word,
+        seen: 1,
+        mastered: correct ? 1 : 0,
+        nextReview: correct ? null : nextReviewDate(new Date(), 1),
+      });
     } else {
       await db
         .update(vocab)
-        .set({ seen: existing[0].seen + 1, mastered: correct ? 1 : existing[0].mastered })
+        .set({
+          seen: existing[0].seen + 1,
+          mastered: correct ? 1 : existing[0].mastered,
+          nextReview: correct ? existing[0].nextReview : nextReviewDate(new Date(), existing[0].seen),
+        })
         .where(eq(vocab.word, word));
     }
   }
@@ -50,5 +76,13 @@ export async function POST(request: Request) {
   const corrections = correct
     ? []
     : [{ type: "respuesta", expected: ex.answer, got: answer, hint: note ?? "Compara con la respuesta esperada." }];
-  return Response.json({ correct, expected: ex.answer, corrections, skill: ex.skill, category: ex.category });
+  return Response.json({
+    correct,
+    expected: ex.answer,
+    corrections,
+    skill: ex.skill,
+    category: ex.category,
+    streak: run,
+    leveledUp,
+  });
 }

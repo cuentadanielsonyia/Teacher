@@ -114,4 +114,4 @@
 ## 2026-09-26 — T18 corrector gramatical (caso "i have go")
 - Qué: las abiertas ya no se aprueban por largas. `lib/checks.ts` caza have+base→participio, he don't, they is, was/were, there is plural, for I→me, a/an + respuesta corta; detalles (I, punto) no suspenden. Correcciones visibles (✏️/💡) y habladas una a una; ejemplo ya no finge ser "la respuesta".
 - Test: vitest 27/27, build OK, smoke `:3109`: "i have go to the mall" → false + "have gone". DB limpiada.
-- Resultado: OK. Pendiente verificar prod tras auto-deploy.
+- Resultado: OK. Verificado en prod (deploy Ready): `/practice` 200 en logs.

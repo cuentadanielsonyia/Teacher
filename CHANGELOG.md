@@ -104,4 +104,4 @@
 ## 2026-09-26 — T16 skills elegibles + speaking avanzado
 - Qué: `lib/modes.ts` (speaking/listening/writing/reading), `lib/useSpeech.ts` (voz EN + micro con 6 errores guiados en español), `/practice` (conversación multi-turno con TTS y fallback escrito, lectura en voz alta con % y palabras falladas, listening con 1x/0.75x y transcripción, writing/reading), `next` filtra por `mode/skill/category` y sirve `speak/passage`, 54 ejercicios nuevos (banco 193), home con 4 tarjetas.
 - Test: vitest 21/21, build OK, smoke `:3107`: listening con speak, read-aloud ra01, writing, `/practice` 200.
-- Resultado: OK. Coste cero (Web Speech API del navegador). Pendiente verificar prod tras auto-deploy.
+- Resultado: OK. Coste cero (Web Speech API del navegador). Verificado en prod (deploy Ready): `/practice` 200 y APIs 200 en logs.

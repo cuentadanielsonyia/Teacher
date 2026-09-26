@@ -94,4 +94,4 @@
 ## 2026-09-26 — T14 adaptación cableada + tests
 - Qué: `lib/grade.ts` (normalizar + abiertas) con 6 tests; `grade` devuelve racha, sube nivel B1→B1+→B2 al 3er acierto seguido, guarda `nextReview` SRS en vocab; `next` crea perfil si falta y prioriza vocab vencido (`review:true`); banner 🎓 en UI.
 - Test: `vitest` 12/12, build OK, smoke `:3105`: 3 seguidas → `leveledUp=B1+`, `level=B1+`; palabra vencida → `v01 review:true`. DB limpiada a 0.
-- Resultado: OK. Pendiente verificar prod tras auto-deploy.
+- Resultado: OK. Verificado en prod (`teacher-8w25rcuox` Ready): páginas 200 y `POST /api/session` + `GET /api/progress` 200 en logs.

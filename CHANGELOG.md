@@ -99,4 +99,4 @@
 ## 2026-09-26 — T15 camino a nativo (C2)
 - Qué: escalera 7 niveles (B1→C2) en `lib/adapt`; banco 32→139 (phrasal verbs, idioms, collocations, discourse, inversión, clefts, mixtas, wish, participios, reported, artículos C2, word formation, registro, matices, pronunciación avanzada, debate/paráfrasis C2); `accept[]` + `tip`/`explicación nativo` en grade y UI; `next` no repite lo intentado; escalera visual en `/progress`; `vitest.config.ts` (alias `@/`).
 - Test: vitest 17/17, build OK, smoke `:3106`: rotación distinta, `tip` devuelto, DB limpiada.
-- Resultado: OK. Pendiente verificar prod tras auto-deploy.
+- Resultado: OK. Verificado en prod (`teacher-egwc5bmx2` Ready): páginas 200 y `GET /api/lesson/next` 200 en logs.

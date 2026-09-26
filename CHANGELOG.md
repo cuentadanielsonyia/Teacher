@@ -23,3 +23,9 @@
 - Por qué: Aprobación explícita 2026-09-26 (6 skills).
 - Test: `Get-ChildItem .agents/skills/SKILL.md` 6 ficheros, security Safe/Low (shadcn Med).
 - Resultado: OK parcial. `openclaw/skills:language-learning` falló (auth failed, repo privado/renombrado) — pendiente alternativa sin asumir.
+
+## 2026-09-26 — mcp: github + postgres + playwright configurados
+- Qué: `opencode.json` con 3 MCP aprobados (github remote OAuth, postgres local via `{env:DATABASE_URL}`, playwright local). Sin secretos en repo.
+- Por qué: Aprobación explícita 2026-09-26 (3 MCP).
+- Test: `node JSON.parse opencode.json` valid. `opencode mcp list` no disponible en PATH (CLI no instalado), pendiente verificar tras reinicio OpenCode.
+- Resultado: OK parcial. Siguiente: `opencode mcp auth github` (OAuth navegador Edge) y `DATABASE_URL` tras T03.

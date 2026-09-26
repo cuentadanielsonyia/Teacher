@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Profesor de Inglés · B1–B2",
-  description: "Lecciones adaptativas de inglés: conversación, gramática, vocabulario, writing y pronunciación.",
+  title: "Profesor de Inglés · camino a nativo (C2)",
+  description: "Lecciones adaptativas de inglés desde B1 hasta C2: phrasal verbs, idioms, gramática avanzada y registro nativo.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

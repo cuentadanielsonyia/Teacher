@@ -95,3 +95,8 @@
 - Qué: `lib/grade.ts` (normalizar + abiertas) con 6 tests; `grade` devuelve racha, sube nivel B1→B1+→B2 al 3er acierto seguido, guarda `nextReview` SRS en vocab; `next` crea perfil si falta y prioriza vocab vencido (`review:true`); banner 🎓 en UI.
 - Test: `vitest` 12/12, build OK, smoke `:3105`: 3 seguidas → `leveledUp=B1+`, `level=B1+`; palabra vencida → `v01 review:true`. DB limpiada a 0.
 - Resultado: OK. Verificado en prod (`teacher-8w25rcuox` Ready): páginas 200 y `POST /api/session` + `GET /api/progress` 200 en logs.
+
+## 2026-09-26 — T15 camino a nativo (C2)
+- Qué: escalera 7 niveles (B1→C2) en `lib/adapt`; banco 32→139 (phrasal verbs, idioms, collocations, discourse, inversión, clefts, mixtas, wish, participios, reported, artículos C2, word formation, registro, matices, pronunciación avanzada, debate/paráfrasis C2); `accept[]` + `tip`/`explicación nativo` en grade y UI; `next` no repite lo intentado; escalera visual en `/progress`; `vitest.config.ts` (alias `@/`).
+- Test: vitest 17/17, build OK, smoke `:3106`: rotación distinta, `tip` devuelto, DB limpiada.
+- Resultado: OK. Pendiente verificar prod tras auto-deploy.

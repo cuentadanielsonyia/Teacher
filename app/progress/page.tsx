@@ -46,6 +46,36 @@ function Ring({ pct }: { pct: number }) {
   );
 }
 
+const LADDER = ["B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"];
+
+function Ladder({ level }: { level: string }) {
+  const idx = Math.max(0, LADDER.indexOf(level));
+  return (
+    <div aria-label={`Camino a nativo: estás en ${level}`}>
+      <p className="text-xs text-zinc-500">🗺 Camino a nivel nativo (C2)</p>
+      <div className="mt-2 flex items-center gap-1">
+        {LADDER.map((l, i) => (
+          <div key={l} className="flex flex-1 items-center gap-1 last:flex-none">
+            <div
+              title={l}
+              className={`flex h-8 flex-1 items-center justify-center rounded-lg text-[11px] font-bold ${
+                i < idx
+                  ? "bg-emerald-500 text-white"
+                  : i === idx
+                    ? "bg-emerald-600 text-white ring-2 ring-emerald-300 ring-offset-1"
+                    : "bg-zinc-200 text-zinc-500 dark:bg-zinc-700 dark:text-zinc-400"
+              }`}
+            >
+              {l}
+            </div>
+            {i < LADDER.length - 1 && <span className="text-zinc-300 dark:text-zinc-600">›</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ProgressPage() {
   const [data, setData] = useState<Progress | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -111,6 +141,10 @@ export default function ProgressPage() {
                 {data.streak > 0 && <span className="ml-2 text-base">🔥 {data.streak} día{data.streak === 1 ? "" : "s"}</span>}
               </p>
             </div>
+          </section>
+
+          <section className="rounded-3xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+            <Ladder level={data.level} />
           </section>
 
           <section className="grid grid-cols-2 gap-3">

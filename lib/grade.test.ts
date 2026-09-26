@@ -24,4 +24,8 @@ describe("grade", () => {
   it("suspende abierta demasiado corta", () => {
     expect(gradeAnswer("writing", "Dear Sir or Madam,", "hi").correct).toBe(false);
   });
+  it("acepta alternativas válidas", () => {
+    expect(gradeAnswer("vocabulario", "knife", "KNOW.", ["know", "knight"]).correct).toBe(true);
+    expect(gradeAnswer("vocabulario", "knife", "fork", ["know"]).correct).toBe(false);
+  });
 });

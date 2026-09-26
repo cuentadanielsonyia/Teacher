@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   const ex = findExercise(id);
   if (!ex) return Response.json({ error: "unknown exercise" }, { status: 400 });
 
-  const { correct, note } = gradeAnswer(ex.skill, ex.answer, answer);
+  const { correct, note } = gradeAnswer(ex.skill, ex.answer, answer, ex.accept ?? []);
 
   await db.insert(attempts).values({
     skill: ex.skill,
@@ -84,5 +84,6 @@ export async function POST(request: Request) {
     category: ex.category,
     streak: run,
     leveledUp,
+    tip: ex.tip ?? null,
   });
 }

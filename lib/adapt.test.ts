@@ -32,8 +32,14 @@ describe("adapt", () => {
     expect(shouldLevelUp(3)).toBe(true);
     expect(nextDifficulty("B1", 3)).toBe("B1+");
     expect(nextDifficulty("B1+", 3)).toBe("B2");
-    expect(nextDifficulty("B2", 5)).toBe("B2");
-    expect(nextDifficulty("B1", 2)).toBe("B1");
+    expect(nextDifficulty("B2", 2)).toBe("B2");
+  });
+  it("escalera completa hasta nativo (C2 tope)", () => {
+    expect(nextDifficulty("B2", 3)).toBe("B2+");
+    expect(nextDifficulty("B2+", 3)).toBe("C1");
+    expect(nextDifficulty("C1", 3)).toBe("C1+");
+    expect(nextDifficulty("C1+", 3)).toBe("C2");
+    expect(nextDifficulty("C2", 5)).toBe("C2");
   });
   it("SRS 2^fallos días", () => {
     const base = new Date("2026-09-26T00:00:00Z");

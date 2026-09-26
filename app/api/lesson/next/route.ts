@@ -40,6 +40,14 @@ export async function GET(request: Request) {
     }
   }
 
+  // Cobertura camino a nativo: evita repetir ejercicios ya intentados (por prompt)
+  // hasta agotar el banco; entonces repasa libremente.
+  const seenPrompts = new Set(rows.map((r) => r.prompt));
+  const dbSeenIds = getExercises()
+    .filter((e) => seenPrompts.has(e.prompt))
+    .map((e) => e.id);
+  const allExclude = [...new Set([...excludeIds, ...dbSeenIds])];
+
   const byCat = new Map<string, { attempts: number; errors: number }>();
   for (const r of rows) {
     const e = byCat.get(r.category) ?? { attempts: 0, errors: 0 };
@@ -55,7 +63,7 @@ export async function GET(request: Request) {
   }));
   const category = stats.length > 0 ? chooseNextCategory(stats) ?? undefined : undefined;
 
-  const ex = pickExercise({ category, level, excludeIds });
+  const ex = pickExercise({ category, level, excludeIds: allExclude });
   return Response.json({
     id: ex.id,
     skill: ex.skill,

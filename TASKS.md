@@ -63,6 +63,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [x] T14 Adaptación cableada + tests corrector (post-MVP)
   - Aceptación: 12/12 vitest, level-up B1→B1+ tras 3 seguidas verificado, SRS review:true verificado, build OK.
   - Resultado: OK 2026-09-26. `lib/grade.ts` + tests, `grade` con racha/level-up/SRS, `next` con repaso vencido + perfil, banner de nivel en UI.
+- [x] T15 Camino a nativo C2 (post-MVP)
+  - Aceptación: 17/17 vitest, banco 100+, escalera 7 niveles, rotación sin repeticiones, tips visibles.
+  - Resultado: OK 2026-09-26. Escalera B1→C2, 139 ejercicios (phrasal, idioms, collocations, inversión, clefts, mixtas, registro, matices, IPA/estrés), `accept[]`, `tip` en grade + UI, `vitest.config.ts`, escalera visual en progreso.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

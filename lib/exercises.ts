@@ -5,9 +5,11 @@ export const ExerciseSchema = z.object({
   id: z.string(),
   skill: z.string(),
   category: z.string(),
-  level: z.enum(["B1", "B1+", "B2"]),
+  level: z.enum(["B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"]),
   prompt: z.string(),
   answer: z.string(),
+  tip: z.string().optional(),
+  accept: z.array(z.string()).optional(),
 });
 
 export type Exercise = z.infer<typeof ExerciseSchema>;

@@ -24,6 +24,7 @@ interface Grade {
   category: string;
   streak: number;
   leveledUp: string | null;
+  tip: string | null;
 }
 
 const SKILL_LABEL: Record<string, string> = {
@@ -228,6 +229,11 @@ export default function LessonPage() {
           {grade.leveledUp && (
             <p className="mt-2 rounded-2xl bg-emerald-600 p-3 text-center text-sm font-extrabold text-white">
               🎓 ¡Nivel nuevo: {grade.leveledUp}! Los próximos ejercicios serán de ese nivel.
+            </p>
+          )}
+          {grade.tip && (
+            <p className="mt-2 rounded-2xl bg-sky-100 p-3 text-sm text-sky-900 dark:bg-sky-950 dark:text-sky-200">
+              📖 Para sonar nativo: {grade.tip}
             </p>
           )}
           <button

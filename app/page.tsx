@@ -12,13 +12,13 @@ export default function Home() {
     <main className="mx-auto flex min-h-full max-w-2xl flex-col gap-8 p-6 sm:p-8">
       <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 text-white shadow-lg">
         <p className="inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-semibold tracking-wide">
-          NIVEL B1–B2 · SINGLE-USER
+          B1 → C2 · CAMINO A NATIVO
         </p>
         <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-4xl">
-          Tu profesor de inglés adaptativo
+          Tu profesor de inglés hasta nivel nativo
         </h1>
         <p className="mt-2 max-w-md text-white/85">
-          Sesiones cortas de texto. Cada respuesta enseña al profe qué ponerte después.
+          Sesiones cortas de texto desde tu nivel hasta C2: phrasal verbs, idioms, registro formal y matices de nativo.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

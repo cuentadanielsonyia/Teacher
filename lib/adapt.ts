@@ -1,5 +1,5 @@
 export type Skill = "conversacion" | "gramatica" | "vocabulario" | "writing" | "pronunciacion";
-export type Difficulty = "B1" | "B1+" | "B2";
+export type Difficulty = "B1" | "B1+" | "B2" | "B2+" | "C1" | "C1+" | "C2";
 
 export interface CategoryStats {
   category: string;
@@ -35,7 +35,7 @@ export function shouldLevelUp(consecutiveCorrect: number): boolean {
   return consecutiveCorrect >= 3;
 }
 
-const ORDER: Difficulty[] = ["B1", "B1+", "B2"];
+const ORDER: Difficulty[] = ["B1", "B1+", "B2", "B2+", "C1", "C1+", "C2"];
 
 export function nextDifficulty(current: Difficulty, consecutiveCorrect: number): Difficulty {
   if (!shouldLevelUp(consecutiveCorrect)) return current;

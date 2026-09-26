@@ -12,8 +12,14 @@
 - Test: `vercel whoami`, `vercel project ls` (0 proyectos en `daniel-ia`), `git push` 403→OK tras limpiar credencial.
 - Resultado: OK. Nota: no hay proyecto Vercel Teacher existente, habrá que crearlo (pendiente confirmación infra).
 
-## 2026-09-26 — docs: PLAN.md Fase 2 propuesto
-- Qué: `PLAN.md` con auditoría (repo vacío, sin Vercel project), arquitectura Next.js + Vercel Postgres + Drizzle, adaptación v1, tablas skills.sh y MCP sin instalar.
-- Archivos: `PLAN.md`.
-- Test: `Test-Path PLAN.md`, lectura manual.
-- Resultado: Pendiente aprobación para Fase 3.
+## 2026-09-26 — docs: PLAN.md Fase 2 aprobado + TASKS.md
+- Qué: `PLAN.md` aprobado (Next.js + Vercel Postgres + Drizzle, MVP texto). `TASKS.md` con T01-T12 granulares.
+- Archivos: `PLAN.md`, `TASKS.md`.
+- Test: `Test-Path TASKS.md`, lectura manual.
+- Resultado: OK.
+
+## 2026-09-26 — skills: 6/7 instaladas project-local
+- Qué: `npx skills add -a opencode` en `Teacher/`: vercel-react-best-practices, frontend-design, shadcn, teach, test-driven-development, systematic-debugging → `.agents/skills/` + `skills-lock.json`.
+- Por qué: Aprobación explícita 2026-09-26 (6 skills).
+- Test: `Get-ChildItem .agents/skills/SKILL.md` 6 ficheros, security Safe/Low (shadcn Med).
+- Resultado: OK parcial. `openclaw/skills:language-learning` falló (auth failed, repo privado/renombrado) — pendiente alternativa sin asumir.

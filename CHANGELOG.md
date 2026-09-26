@@ -53,3 +53,8 @@
 - Por qué: restricción activa coste cero + `vercel storage` sin CLI. Pivote aprobado `Usar SQLite`.
 - Test: `drizzle-kit generate/migrate` OK, `node scripts/check-db.mjs` 4 tablas, `npm run build` Next 16.3.6 OK.
 - Resultado: OK local. Limitación: SQLite no persiste en Vercel serverless — prod requerirá Turso/Neon free (cero coste) posterior. GitHub connect Vercel sigue bloqueado (2 intentos CLI 400) — requiere 1 clic tuyo en Edge (`teacher/settings/git` + `github.com/apps/vercel` ya abiertos).
+
+## 2026-09-26 — T05 adapt.ts OK
+- Qué: `lib/adapt.ts` (peso, level-up >=3, SRS) + `lib/adapt.test.ts` 6 casos + `vitest` + `@types/node@24` (fix peer).
+- Test: `npx vitest run lib/adapt.test.ts` 6 passed.
+- Resultado: OK. Coste cero.

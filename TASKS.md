@@ -23,9 +23,10 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Nota: no persiste en Vercel serverless (pendiente Turso free para prod).
 
 ## Fase 4 — Dominio adaptativo
-- [ ] T05 `lib/adapt.ts`: peso categoría + subida dificultad tras 3 aciertos + SRS `2^fallos`
+- [x] T05 `lib/adapt.ts`: peso categoría + subida dificultad tras 3 aciertos + SRS `2^fallos`
   - Aceptación: `vitest lib/adapt.test.ts` 6+ casos pasan (peso, subida, repaso).
   - Dep: T01.
+  - Resultado: OK 2026-09-26, 6/6 tests.
 - [ ] T06 Banco local `data/exercises.json` B1-B2 (conversación, gramática, vocab, writing, pronunciación-texto)
   - Aceptación: 30+ ejercicios con `{id, skill, category, level, prompt, answer}` válido por schema zod.
   - Dep: T01.

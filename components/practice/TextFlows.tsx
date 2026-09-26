@@ -83,7 +83,13 @@ function Flow({ mode, title, hint, showPassage }: { mode: string; title: string;
           ) : (
             <div className={`mt-3 rounded-2xl p-4 ${grade.correct ? "bg-green-50 dark:bg-green-950" : "bg-amber-50 dark:bg-amber-950"}`}>
               <p className="font-bold">{grade.correct ? "🎉 ¡Correcto!" : "💪 A repasar"}</p>
-              {!grade.correct && <p className="mt-1">Esperado: <b>{grade.expected}</b></p>}
+              {!grade.correct && grade.expected && <p className="mt-1">Esperado: <b>{grade.expected}</b></p>}
+              {!grade.correct &&
+                grade.corrections.map((c, i) => (
+                  <p key={i} className="mt-1 text-sm">
+                    {c.type === "detalle" ? "💡" : "✏️"} {c.hint}
+                  </p>
+                ))}
               {grade.leveledUp && <p className="mt-1 text-sm font-bold text-emerald-700">🎓 ¡Nivel nuevo: {grade.leveledUp}!</p>}
               <TipBox tip={grade.tip} />
               <button onClick={load} className="mt-3 w-full rounded-full bg-zinc-900 px-4 py-2.5 font-semibold text-white dark:bg-white dark:text-zinc-900">

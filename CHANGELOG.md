@@ -110,3 +110,8 @@
 - Qué: tras tu respuesta el profe HABLA la corrección en inglés («The correct answer is: …» o praise) y el consejo en español con voz ES, además de mostrarlo como turno 🔊 reescuchable en el chat.
 - Test: build OK, `:3108` `/practice` 200.
 - Resultado: OK. Verificado en prod (deploy Ready): `/practice` 200 y ciclo next/grade 200 en logs.
+
+## 2026-09-26 — T18 corrector gramatical (caso "i have go")
+- Qué: las abiertas ya no se aprueban por largas. `lib/checks.ts` caza have+base→participio, he don't, they is, was/were, there is plural, for I→me, a/an + respuesta corta; detalles (I, punto) no suspenden. Correcciones visibles (✏️/💡) y habladas una a una; ejemplo ya no finge ser "la respuesta".
+- Test: vitest 27/27, build OK, smoke `:3109`: "i have go to the mall" → false + "have gone". DB limpiada.
+- Resultado: OK. Pendiente verificar prod tras auto-deploy.

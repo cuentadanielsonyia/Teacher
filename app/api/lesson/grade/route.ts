@@ -2,8 +2,9 @@ import { db } from "@/src/db";
 import { attempts, profile, vocab } from "@/src/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { nextDifficulty, nextReviewDate, type Difficulty } from "@/lib/adapt";
+import { checkOpenAnswer } from "@/lib/checks";
 import { findExercise } from "@/lib/exercises";
-import { gradeAnswer, normalize } from "@/lib/grade";
+import { gradeAnswer, normalize, OPEN_SKILLS } from "@/lib/grade";
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
@@ -16,14 +17,20 @@ export async function POST(request: Request) {
   const ex = findExercise(id);
   if (!ex) return Response.json({ error: "unknown exercise" }, { status: 400 });
 
-  const { correct, note } = gradeAnswer(ex.skill, ex.answer, answer, ex.accept ?? []);
+  const { correct } = gradeAnswer(ex.skill, ex.answer, answer, ex.accept ?? []);
+
+  // Respuestas abiertas: corrector gramatical con errores específicos (español).
+  // Sin errores + texto elaborado = bien; con errores = suspenso aunque sea larga.
+  const openIssues = OPEN_SKILLS.has(ex.skill) ? checkOpenAnswer(answer) : [];
+  const openErrors = openIssues.filter((i) => i.kind === "error");
+  const isCorrect = OPEN_SKILLS.has(ex.skill) ? openErrors.length === 0 && correct : correct;
 
   await db.insert(attempts).values({
     skill: ex.skill,
     category: ex.category,
     prompt: ex.prompt,
     answer,
-    correct: correct ? 1 : 0,
+    correct: isCorrect ? 1 : 0,
     createdAt: new Date().toISOString(),
   });
 
@@ -58,27 +65,40 @@ export async function POST(request: Request) {
       await db.insert(vocab).values({
         word,
         seen: 1,
-        mastered: correct ? 1 : 0,
-        nextReview: correct ? null : nextReviewDate(new Date(), 1),
+        mastered: isCorrect ? 1 : 0,
+        nextReview: isCorrect ? null : nextReviewDate(new Date(), 1),
       });
     } else {
       await db
         .update(vocab)
         .set({
           seen: existing[0].seen + 1,
-          mastered: correct ? 1 : existing[0].mastered,
-          nextReview: correct ? existing[0].nextReview : nextReviewDate(new Date(), existing[0].seen),
+          mastered: isCorrect ? 1 : existing[0].mastered,
+          nextReview: isCorrect ? existing[0].nextReview : nextReviewDate(new Date(), existing[0].seen),
         })
         .where(eq(vocab.word, word));
     }
   }
 
-  const corrections = correct
-    ? []
-    : [{ type: "respuesta", expected: ex.answer, got: answer, hint: note ?? "Compara con la respuesta esperada." }];
+  const issueCorrections = openIssues.map((i) => ({
+    type: i.kind === "error" ? "gramatica" : "detalle",
+    expected: "",
+    got: answer,
+    hint: i.hint,
+  }));
+  const corrections = isCorrect
+    ? issueCorrections.filter((c) => c.type === "detalle")
+    : [
+        ...issueCorrections.filter((c) => c.type === "gramatica"),
+        ...issueCorrections.filter((c) => c.type === "detalle"),
+        ...(issueCorrections.length === 0
+          ? [{ type: "respuesta", expected: ex.answer, got: answer, hint: "Compara con la respuesta esperada." }]
+          : []),
+      ];
   return Response.json({
-    correct,
-    expected: ex.answer,
+    correct: isCorrect,
+    // En abiertas no hay UNA respuesta: el ejemplo va en burbujas/correcciones, no como "esperado"
+    expected: OPEN_SKILLS.has(ex.skill) ? "" : ex.answer,
     corrections,
     skill: ex.skill,
     category: ex.category,

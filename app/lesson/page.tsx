@@ -215,11 +215,15 @@ export default function LessonPage() {
           {!grade.correct && (
             <div className="mt-3 rounded-2xl bg-white/70 p-3 dark:bg-black/30">
               <p className="text-sm text-zinc-600 dark:text-zinc-300">Tu respuesta: “{answer.trim()}”</p>
-              <p className="mt-1 text-base">
-                Esperado: <b className="text-emerald-700 dark:text-emerald-300">{grade.expected}</b>
-              </p>
+              {grade.expected && (
+                <p className="mt-1 text-base">
+                  Esperado: <b className="text-emerald-700 dark:text-emerald-300">{grade.expected}</b>
+                </p>
+              )}
               {grade.corrections.map((c, i) => (
-                <p key={i} className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">💡 {c.hint}</p>
+                <p key={i} className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+                  {c.type === "detalle" ? "💡" : "✏️"} {c.hint}
+                </p>
               ))}
             </div>
           )}

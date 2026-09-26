@@ -72,6 +72,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [x] T17 Feedback audible bilingüe en conversación (post-MVP)
   - Aceptación: build OK, `/practice` 200, corrección EN + consejo ES hablados y visibles.
   - Resultado: OK 2026-09-26. `speak(text, {lang})` con voz EN/ES, turno de feedback con 🔊 reescuchable.
+- [x] T18 Corrector gramatical real en abiertas (post-MVP)
+  - Aceptación: 27/27 vitest, "i have go to the mall" → suspenso con "have gone", build OK.
+  - Resultado: OK 2026-09-26. `lib/checks.ts` (have+participio, don't 3ª persona, be, was/were, there is plural, prep+I, a/an, corta) + detalles (I mayúscula, punto); correcciones visibles y habladas burbuja a burbuja.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

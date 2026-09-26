@@ -9,7 +9,7 @@ import {
   sttSupported,
   ttsSupported,
 } from "@/lib/useSpeech";
-import { ErrorBox, TipBox, fetchNext, sendGrade, type GradeResp, type LessonEx } from "./shared";
+import { ErrorBox, TipBox, fetchNext, sendGrade, type LessonEx } from "./shared";
 
 type Sub = "conversacion" | "lectura";
 type Mic = "idle" | "listening" | "sending";
@@ -17,6 +17,7 @@ type Mic = "idle" | "listening" | "sending";
 interface Turn {
   from: "profe" | "tu";
   text: string;
+  lang?: "en" | "es";
 }
 
 const PRAISE = ["¡Genial!", "¡Muy bien!", "¡Perfecto!", "¡Buen trabajo!"];
@@ -49,10 +50,10 @@ function useVoice() {
   const [voiceOn, setVoiceOn] = useState(true);
   const supported = ttsSupported();
   const say = useCallback(
-    async (text: string) => {
+    async (text: string, lang: "en" | "es" = "en") => {
       if (!voiceOn || !supported) return;
       try {
-        await speak(text);
+        await speak(text, { lang });
       } catch {
         /* el usuario puede pulsar ▶ manualmente */
       }
@@ -67,7 +68,6 @@ function Conversation() {
   const [current, setCurrent] = useState<LessonEx | null>(null);
   const [transcript, setTranscript] = useState("");
   const [mic, setMic] = useState<Mic>("idle");
-  const [grade, setGrade] = useState<GradeResp | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [started, setStarted] = useState(false);
   const [spokenWords, setSpokenWords] = useState(0);
@@ -81,13 +81,12 @@ function Conversation() {
     seen.current.push(n.id);
     setCurrent(n);
     setTranscript("");
-    setGrade(null);
     return n;
   }, []);
 
   useEffect(() => {
     bottom.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [turns, grade]);
+  }, [turns]);
 
   async function start() {
     setError(null);
@@ -95,7 +94,7 @@ function Conversation() {
       const n = await loadPrompt();
       setStarted(true);
       const hello = n.prompt;
-      setTurns([{ from: "profe", text: hello }]);
+      setTurns([{ from: "profe", text: hello, lang: "en" }]);
       await say(hello);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error de red");
@@ -122,25 +121,51 @@ function Conversation() {
     setError(null);
     try {
       const g = await sendGrade(current.id, transcript.trim());
-      setGrade(g);
       setSpokenWords((w) => w + transcript.trim().split(/\s+/).length);
-      // Feedback visible Y audible: corrección en inglés + consejo en español
-      const mainEn = g.correct
-        ? `${PRAISE[Math.floor(Math.random() * PRAISE.length)]}`
-        : `The correct answer is: ${g.expected}.`;
-      const feedbackText = g.tip ? `${mainEn} — Consejo: ${g.tip}` : mainEn;
-      setTurns((t) => [...t, { from: "tu", text: transcript.trim() }, { from: "profe", text: `🔊 ${feedbackText}` }]);
       stopSpeaking();
+      // Feedback visible Y audible, burbuja a burbuja (cada una reescuchable)
+      const feedback: Turn[] = [];
+      const sayQueue: { text: string; lang: "en" | "es" }[] = [];
+      if (g.correct) {
+        const praise = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+        feedback.push({ from: "profe", text: `✅ ${praise}`, lang: "en" });
+        sayQueue.push({ text: praise, lang: "en" });
+      } else {
+        feedback.push({ from: "profe", text: "❌ Casi, mira:", lang: "es" });
+        sayQueue.push({ text: "Casi. Mira la corrección.", lang: "es" });
+      }
+      for (const c of g.corrections) {
+        if (c.type === "detalle") {
+          feedback.push({ from: "profe", text: `💡 ${c.hint}`, lang: "es" });
+        } else {
+          feedback.push({ from: "profe", text: `✏️ ${c.hint}`, lang: "es" });
+        }
+        sayQueue.push({ text: c.hint, lang: "es" });
+      }
+      if (!g.correct && g.expected) {
+        feedback.push({ from: "profe", text: `💬 Ejemplo: “${g.expected}”`, lang: "en" });
+        sayQueue.push({ text: g.expected, lang: "en" });
+      }
+      if (g.tip) {
+        feedback.push({ from: "profe", text: `📖 ${g.tip}`, lang: "es" });
+        sayQueue.push({ text: `Consejo: ${g.tip}`, lang: "es" });
+      }
+      setTurns((t) => [...t, { from: "tu", text: transcript.trim() }, ...feedback]);
+      if (g.leveledUp) {
+        setTurns((t) => [...t, { from: "profe", text: `🎓 ¡Nivel nuevo: ${g.leveledUp}!`, lang: "es" }]);
+        sayQueue.push({ text: `¡Nivel nuevo: ${g.leveledUp}!`, lang: "es" });
+      }
       if (voiceOn) {
-        try {
-          await speak(mainEn, { lang: "en" });
-          if (g.tip) await speak(`Consejo: ${g.tip}`, { lang: "es" });
-        } catch {
-          /* el turno queda visible con 🔊 para reescuchar */
+        for (const s of sayQueue) {
+          try {
+            await speak(s.text, { lang: s.lang });
+          } catch {
+            break; // el resto queda visible con 🔊
+          }
         }
       }
       const n = await loadPrompt();
-      setTurns((t) => [...t, { from: "profe", text: n.prompt }]);
+      setTurns((t) => [...t, { from: "profe", text: n.prompt, lang: "en" }]);
       await say(n.prompt);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error de red");
@@ -193,7 +218,7 @@ function Conversation() {
                 <button
                   aria-label="Repetir en voz alta"
                   className="ml-2 text-sm opacity-70 hover:opacity-100"
-                  onClick={() => say(t.text)}
+                  onClick={() => say(t.text.replace(/^[✅❌✏️💡💬📖🎓🔊\s]+/u, ""), t.lang ?? "en")}
                 >
                   🔊
                 </button>
@@ -205,8 +230,6 @@ function Conversation() {
       </div>
 
       {error && <ErrorBox message={error} onRetry={() => setError(null)} />}
-
-      {grade && <TipBox tip={grade.tip} />}
 
       <div className="rounded-3xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-center gap-3">

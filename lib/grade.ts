@@ -9,7 +9,35 @@ export interface GradeResult {
   note: string | null;
 }
 
-/** Reglas MVP: igualdad normalizada (o alternativa aceptada); abiertas aceptadas si elaboradas. */
+export interface ReadScore {
+  score: number; // 0..100
+  matched: number;
+  total: number;
+  missing: string[];
+}
+
+/** Puntuación de lectura en voz alta: % de palabras de referencia presentes (multiconjunto). */
+export function scoreReading(referenceRaw: string, transcriptRaw: string): ReadScore {
+  const ref = normalize(referenceRaw).split(" ").filter(Boolean);
+  const got = normalize(transcriptRaw).split(" ").filter(Boolean);
+  const counts = new Map<string, number>();
+  for (const w of got) counts.set(w, (counts.get(w) ?? 0) + 1);
+  const missing: string[] = [];
+  let matched = 0;
+  for (const w of ref) {
+    const n = counts.get(w) ?? 0;
+    if (n > 0) {
+      matched += 1;
+      counts.set(w, n - 1);
+    } else {
+      missing.push(w);
+    }
+  }
+  const total = ref.length;
+  return { score: total === 0 ? 0 : Math.round((matched / total) * 100), matched, total, missing };
+}
+
+/** Reglas de corrección: igualdad normalizada (o alternativa aceptada); abiertas aceptadas si elaboradas. */
 export function gradeAnswer(skill: string, expectedRaw: string, givenRaw: string, acceptRaw: string[] = []): GradeResult {
   const expected = normalize(expectedRaw);
   const given = normalize(givenRaw);

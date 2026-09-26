@@ -100,3 +100,8 @@
 - Qué: escalera 7 niveles (B1→C2) en `lib/adapt`; banco 32→139 (phrasal verbs, idioms, collocations, discourse, inversión, clefts, mixtas, wish, participios, reported, artículos C2, word formation, registro, matices, pronunciación avanzada, debate/paráfrasis C2); `accept[]` + `tip`/`explicación nativo` en grade y UI; `next` no repite lo intentado; escalera visual en `/progress`; `vitest.config.ts` (alias `@/`).
 - Test: vitest 17/17, build OK, smoke `:3106`: rotación distinta, `tip` devuelto, DB limpiada.
 - Resultado: OK. Verificado en prod (`teacher-egwc5bmx2` Ready): páginas 200 y `GET /api/lesson/next` 200 en logs.
+
+## 2026-09-26 — T16 skills elegibles + speaking avanzado
+- Qué: `lib/modes.ts` (speaking/listening/writing/reading), `lib/useSpeech.ts` (voz EN + micro con 6 errores guiados en español), `/practice` (conversación multi-turno con TTS y fallback escrito, lectura en voz alta con % y palabras falladas, listening con 1x/0.75x y transcripción, writing/reading), `next` filtra por `mode/skill/category` y sirve `speak/passage`, 54 ejercicios nuevos (banco 193), home con 4 tarjetas.
+- Test: vitest 21/21, build OK, smoke `:3107`: listening con speak, read-aloud ra01, writing, `/practice` 200.
+- Resultado: OK. Coste cero (Web Speech API del navegador). Pendiente verificar prod tras auto-deploy.

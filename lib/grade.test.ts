@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { gradeAnswer, normalize } from "./grade";
+import { gradeAnswer, normalize, scoreReading } from "./grade";
 
 describe("grade", () => {
   it("normaliza mayúsculas, espacios y puntuación", () => {
@@ -27,5 +27,12 @@ describe("grade", () => {
   it("acepta alternativas válidas", () => {
     expect(gradeAnswer("vocabulario", "knife", "KNOW.", ["know", "knight"]).correct).toBe(true);
     expect(gradeAnswer("vocabulario", "knife", "fork", ["know"]).correct).toBe(false);
+  });
+  it("puntúa lectura en voz alta por palabras", () => {
+    const full = scoreReading("The weather is changing", "the weather is changing");
+    expect(full.score).toBe(100);
+    const half = scoreReading("the weather is changing quickly today", "the weather is");
+    expect(half.score).toBeLessThan(60);
+    expect(half.missing).toContain("changing");
   });
 });

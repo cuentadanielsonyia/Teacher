@@ -51,8 +51,30 @@ export default function Home() {
         ))}
       </section>
 
+      <section>
+        <h2 className="mb-2 text-lg font-extrabold">Elige tu skill</h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { m: "speaking", icon: "🎙", t: "Speaking", d: "Conversa con voz y lee con puntuación." },
+            { m: "listening", icon: "🎧", t: "Listening", d: "Escucha audios con velocidad ajustable." },
+            { m: "writing", icon: "✍️", t: "Writing", d: "Emails, ensayos y paráfrasis." },
+            { m: "reading", icon: "📖", t: "Reading", d: "Textos, gramática y vocabulario." },
+          ].map((c) => (
+            <Link
+              key={c.m}
+              href={`/practice?mode=${c.m}`}
+              className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition hover:scale-[1.02] hover:border-emerald-400 dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <p className="text-2xl">{c.icon}</p>
+              <p className="mt-1 font-bold">{c.t}</p>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">{c.d}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="rounded-2xl border border-dashed border-zinc-300 p-4 text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
-        💡 <b>Consejo:</b> responde cada día para mantener la racha. El audio (listening/speaking) llegará en la fase 2.
+        💡 <b>Consejo:</b> el speaking y el listening usan la voz de tu navegador (gratis, sin cuentas). Permite el micrófono cuando Edge te lo pida.
       </section>
     </main>
   );

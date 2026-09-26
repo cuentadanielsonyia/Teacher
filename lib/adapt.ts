@@ -1,4 +1,4 @@
-export type Skill = "conversacion" | "gramatica" | "vocabulario" | "writing" | "pronunciacion";
+export type Skill = "conversacion" | "gramatica" | "vocabulario" | "writing" | "pronunciacion" | "listening" | "reading";
 export type Difficulty = "B1" | "B1+" | "B2" | "B2+" | "C1" | "C1+" | "C2";
 
 export interface CategoryStats {

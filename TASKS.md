@@ -66,6 +66,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [x] T15 Camino a nativo C2 (post-MVP)
   - Aceptación: 17/17 vitest, banco 100+, escalera 7 niveles, rotación sin repeticiones, tips visibles.
   - Resultado: OK 2026-09-26. Escalera B1→C2, 139 ejercicios (phrasal, idioms, collocations, inversión, clefts, mixtas, registro, matices, IPA/estrés), `accept[]`, `tip` en grade + UI, `vitest.config.ts`, escalera visual en progreso.
+- [x] T16 Skills elegibles + speaking avanzado (post-MVP)
+  - Aceptación: 21/21 vitest, filtros mode/skill/category OK, `/practice` 200, build OK.
+  - Resultado: OK 2026-09-26. `lib/modes.ts`, `lib/useSpeech.ts` (TTS+STT con errores guiados), `/practice` con Speaking (conversación multi-turno con voz + lectura puntuada %), Listening (velocidad, replays, transcripción), Writing/Reading; 54 ejercicios nuevos (banco 193); `next` con `mode/skill/category` y `speak/passage`; todo Web Speech API gratis sin cuentas.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

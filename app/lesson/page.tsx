@@ -33,6 +33,8 @@ const SKILL_LABEL: Record<string, string> = {
   conversacion: "💬 Conversación",
   writing: "✍️ Writing",
   pronunciacion: "🔊 Pronunciación",
+  listening: "🎧 Listening",
+  reading: "📖 Reading",
 };
 
 function Chip({ children, tone }: { children: React.ReactNode; tone: string }) {

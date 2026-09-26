@@ -109,4 +109,4 @@
 ## 2026-09-26 — T17 feedback audible bilingüe en conversación
 - Qué: tras tu respuesta el profe HABLA la corrección en inglés («The correct answer is: …» o praise) y el consejo en español con voz ES, además de mostrarlo como turno 🔊 reescuchable en el chat.
 - Test: build OK, `:3108` `/practice` 200.
-- Resultado: OK. Pendiente verificar prod tras auto-deploy.
+- Resultado: OK. Verificado en prod (deploy Ready): `/practice` 200 y ciclo next/grade 200 en logs.

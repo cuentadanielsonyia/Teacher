@@ -85,3 +85,8 @@
 - Salvedad 1 (persistencia): `/tmp` efímero por instancia; recarga persiste en instancia caliente. Mejora opcional: Turso/Neon free con 1 clic tuyo (aceptar ToS en dashboard).
 - Salvedad 2 (acceso): Deployment Protection pide login Vercel a anónimos; tú en Edge entras directo. Desactivarlo es 1 toggle en `teacher/settings/deployment-protection` si quieres URL pública.
 - Resultado: DONE.
+
+## 2026-09-26 — T13 diseño + usabilidad
+- Qué: `layout.tsx` (nav, `lang=es`, título), home hero + pasos, lección (chips skill/categoría/nivel, contador palabras, racha sesión, Ctrl+Enter, skeletons, foco auto, resultado con esperado/pista), progreso (anillo precisión, barras errores/vocab, tiempo formateado, empty-state, reintentos).
+- Test: `npm run build` OK, `:3104` `/`=200 `/lesson`=200 `/progress`=200.
+- Resultado: OK. Sin cambios backend. Resto (audio, DB persistente, protección pública) queda para después.

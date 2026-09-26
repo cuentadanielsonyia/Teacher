@@ -57,6 +57,9 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Aceptación: URL prod carga, ciclo completo en prod, `CHANGELOG` y `TASKS` al día.
   - Dep: T10, T11.
   - Resultado: OK 2026-09-26 con salvedades: `https://teacher-daniel-ia.vercel.app` UI 200, APIs prod 200 (`next/grade/session` en logs). Persistencia prod por instancia (/tmp efímero). Vercel Deployment Protection pide login a anónimos (owner en Edge lo ve sin problema).
+- [x] T13 Pulido diseño + usabilidad (post-MVP)
+  - Aceptación: build OK, `/`, `/lesson`, `/progress` 200, UI en español con dark mode.
+  - Resultado: OK 2026-09-26. Header/nav + hero home, lección con chips/contador/racha/Ctrl+Enter/skeletons, progreso con anillo/barras/empty-state.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

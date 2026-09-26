@@ -11,6 +11,7 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [ ] T02 `vercel link` + crear proyecto Vercel en scope `daniel-ia` (CONFIRMAR)
   - Aceptación: `vercel project ls` muestra `teacher`, preview URL responde.
   - Dep: T01.
+  - Resultado: OK parcial 2026-09-26, `daniel-ia/teacher` creado y linkado (`.vercel/`), `project ls` lo lista. GitHub auto-connect falló (requiere Vercel GitHub App OAuth) — pendiente manual `vercel.link/git`.
 - [ ] T03 Provisionar Vercel Postgres + `POSTGRES_URL` en `.env.local` y Vercel env (CONFIRMAR)
   - Aceptación: `vercel env pull` trae `POSTGRES_URL`, conexión `SELECT 1` OK.
   - Dep: T02.

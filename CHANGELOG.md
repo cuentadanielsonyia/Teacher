@@ -74,3 +74,8 @@
 - Por qué: APIs prod 500 `Cannot open database`; restricción coste cero + cero interacciones.
 - Test: `npm run build` OK, ciclo local `:3102` next→grade→session→progress OK (limpiado a 0). Pendiente verificar prod tras auto-deploy.
 - Resultado: Parcial. Persistencia prod = por instancia (/tmp efímero); documentado. Mejora opcional: Turso/Neon free con 1 clic tuyo.
+
+## 2026-09-26 — T12 fix2: DDL inline (migrator sin ficheros en serverless)
+- Qué: `src/db/index.ts` crea tablas con `CREATE TABLE IF NOT EXISTS` en boot (local `data/`, prod `/tmp`). Elimina `migrate()` (fallaba `Can't find meta/_…` en prod).
+- Test: build OK, ciclo local `:3103` next+progress OK.
+- Resultado: Pendiente verificar prod tras auto-deploy.

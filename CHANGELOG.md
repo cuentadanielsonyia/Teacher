@@ -41,3 +41,9 @@
 - Archivos: `app/`, `public/`, `package.json`, `tsconfig.json`, `next.config.ts`, etc.
 - Test: `npm run build` compiled successfully, 4/4 static pages. `npm run dev` pendiente verificación manual `/` 200.
 - Resultado: OK. Coste cero verificado (solo Hobby free, sin añadidos pago).
+
+## 2026-09-26 — T02 vercel link OK parcial
+- Qué: `vercel link --yes -p teacher` → `daniel-ia/teacher` creado, `.vercel/` ignorado. `vercel project ls` lista `teacher`.
+- Por qué: T02, base deploy. Coste cero (Hobby, sin Postgres aún).
+- Test: `vercel project ls`, `Test-Path .vercel`.
+- Resultado: OK parcial. GitHub connect falló (falta Vercel GitHub App OAuth) — pendiente manual. T03 Postgres sin CLI (`storage` no existe en CLI 53.4) — pendiente crear vía dashboard free tier.

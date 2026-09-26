@@ -79,3 +79,9 @@
 - Qué: `src/db/index.ts` crea tablas con `CREATE TABLE IF NOT EXISTS` en boot (local `data/`, prod `/tmp`). Elimina `migrate()` (fallaba `Can't find meta/_…` en prod).
 - Test: build OK, ciclo local `:3103` next+progress OK.
 - Resultado: Pendiente verificar prod tras auto-deploy.
+
+## 2026-09-26 — T12 DONE (DoD con 2 salvedades)
+- Qué: Deploy `teacher-f7c9yqskg` → `teacher-16fmjs9al` Ready. `vercel logs --environment production`: `GET /lesson` 200, `GET /api/lesson/next` 200, `POST /api/lesson/grade` 200, `POST /api/session` 200. Ciclo MVP completo en prod.
+- Salvedad 1 (persistencia): `/tmp` efímero por instancia; recarga persiste en instancia caliente. Mejora opcional: Turso/Neon free con 1 clic tuyo (aceptar ToS en dashboard).
+- Salvedad 2 (acceso): Deployment Protection pide login Vercel a anónimos; tú en Edge entras directo. Desactivarlo es 1 toggle en `teacher/settings/deployment-protection` si quieres URL pública.
+- Resultado: DONE.

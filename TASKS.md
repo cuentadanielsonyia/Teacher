@@ -53,10 +53,10 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Aceptación: recargar no pierde datos (lee de DB), racha y tiempo visibles.
   - Dep: T09.
   - Resultado: OK 2026-09-26, `/progress` 200, `POST /api/session 90s` → streak:1 timeSec:90 (limpiado a 0 tras test).
-- [ ] T12 Deploy prod Vercel + verificación DoD MVP
+- [x] T12 Deploy prod Vercel + verificación DoD MVP
   - Aceptación: URL prod carga, ciclo completo en prod, `CHANGELOG` y `TASKS` al día.
   - Dep: T10, T11.
-  - Estado 2026-09-26: fix autónomo aplicado (`src/db`: `/tmp/teacher.db` + migrate runtime en Vercel; `data/` en local). Sin secretos/registros. Prisma/Neon requieren aceptar términos legales en navegador — no firmado por ti, queda como mejora opcional para persistencia multi-instancia.
+  - Resultado: OK 2026-09-26 con salvedades: `https://teacher-daniel-ia.vercel.app` UI 200, APIs prod 200 (`next/grade/session` en logs). Persistencia prod por instancia (/tmp efímero). Vercel Deployment Protection pide login a anónimos (owner en Edge lo ve sin problema).
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

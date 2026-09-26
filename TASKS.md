@@ -56,6 +56,7 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
 - [ ] T12 Deploy prod Vercel + verificación DoD MVP
   - Aceptación: URL prod carga, ciclo completo en prod, `CHANGELOG` y `TASKS` al día.
   - Dep: T10, T11.
+  - Estado 2026-09-26: BLOQUEADO. UI prod 200 (`/`, `/lesson`, `/progress`), pero APIs 500 `TypeError: Cannot open d…` (SQLite no abre en serverless, previsto en PLAN). Requiere decisión DB prod cero-coste (Turso/Neon free) con secretos — sin asumir.
 
 ## Skills/MCP instaladas (tras aprobación 2026-09-26)
 - Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.

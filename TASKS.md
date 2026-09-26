@@ -76,6 +76,6 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Aceptación: 27/27 vitest, "i have go to the mall" → suspenso con "have gone", build OK.
   - Resultado: OK 2026-09-26. `lib/checks.ts` (have+participio, don't 3ª persona, be, was/were, there is plural, prep+I, a/an, corta) + detalles (I mayúscula, punto); correcciones visibles y habladas burbuja a burbuja.
 
-## Skills/MCP instaladas (tras aprobación 2026-09-26)
-- Skills (6): vercel-react-best, frontend-design, shadcn, teach, language-learning, TDD-debugging — pendiente instalar project-local.
-- MCP (3): Vercel-Postgres, GitHub, Playwright — pendiente configurar.
+## Skills/MCP instaladas (aprobadas 2026-09-26, verificadas en repo)
+- Skills (7) en `.agents/skills/`: vercel-react-best-practices, frontend-design, shadcn, teach, test-driven-development, systematic-debugging, english-coach. (`openclaw/skills:language-learning` falló por auth → sustituida por `tianmind-studio/english-coach`.)
+- MCP (3) en `opencode.json`: github (remote OAuth, sin PAT en repo), postgres (local, `DATABASE_URL` por env), playwright (local). Requieren `opencode mcp auth github` tras reinstalar CLI.

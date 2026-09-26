@@ -69,8 +69,8 @@
 - Test: `npm run build` 10/10. `:3101` `/`=200 `/lesson`=200 `/progress`=200. `POST /api/session 90s` → `streak:1 timeSec:90`. Limpieza a 0 sesiones/profile.
 - Resultado: OK. Pendiente T12 deploy prod + DoD (Git ya conectado, push dispara deploy).
 
-## 2026-09-26 — T12 BLOQUEADO: APIs 500 en prod (SQLite)
-- Qué: Auto-deploy OK (`teacher-daniel-ia.vercel.app`, 2 deploys Ready). UI 200/304, pero `GET /api/lesson/next`, `GET /api/progress`, `POST /api/session` → 500 `TypeError: Cannot open d…` (`vercel logs --environment production`).
-- Por qué: SQLite en fichero no abre en Vercel serverless (limitación documentada en PLAN). Local sigue OK.
-- Test: `vercel ls` Ready, `vercel logs`, Edge abierto a prod + `/api/progress` (protección Vercel Auth pide login a anónimos; owner en Edge lo ve).
-- Resultado: BLOQUEADO. Sin fix sin aprobación (toca env/secretos). Opciones cero-coste en pregunta siguiente.
+## 2026-09-26 — T12 fix autónomo: DB serverless-safe (sin registros)
+- Qué: `src/db/index.ts` usa `/tmp/teacher.db` + `migrate()` runtime cuando `VERCEL=1`; local sigue `data/`. Prisma/Neon descartados sin tu clic (exigen aceptar ToS/EULA en navegador — no firmo términos por ti).
+- Por qué: APIs prod 500 `Cannot open database`; restricción coste cero + cero interacciones.
+- Test: `npm run build` OK, ciclo local `:3102` next→grade→session→progress OK (limpiado a 0). Pendiente verificar prod tras auto-deploy.
+- Resultado: Parcial. Persistencia prod = por instancia (/tmp efímero); documentado. Mejora opcional: Turso/Neon free con 1 clic tuyo.

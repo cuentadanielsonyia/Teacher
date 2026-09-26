@@ -63,3 +63,8 @@
 - Qué: `vercel git connect` → `already connected`. `data/exercises.json` 32 ejercicios, `lib/exercises.ts` zod, `app/api/lesson/next|grade`, `app/api/progress`. `zod` verificado.
 - Test: `npm run build` 3 routes dinámicas OK. Integración `:3100`: `next(g06 articles)` → `grade wrong→correct:false` → `progress total:1 errorsTop:articles`. DB limpiada a 0 intentos.
 - Resultado: OK. Ciclo MVP sin UI completo.
+
+## 2026-09-26 — T10-T11 UI + session OK
+- Qué: `app/page.tsx` home, `app/lesson/page.tsx` (next→grade→next, sendBeacon session), `app/progress/page.tsx` (racha, precisión, vocab, errores), `app/api/session/route.ts` (streak + duración).
+- Test: `npm run build` 10/10. `:3101` `/`=200 `/lesson`=200 `/progress`=200. `POST /api/session 90s` → `streak:1 timeSec:90`. Limpieza a 0 sesiones/profile.
+- Resultado: OK. Pendiente T12 deploy prod + DoD (Git ya conectado, push dispara deploy).

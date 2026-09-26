@@ -45,12 +45,14 @@ Regla: `escribir → testear → CHANGELOG → commit → push`. Infra/env (Verc
   - Resultado: OK 2026-09-26, `total/correct/errorsTop/vocab/time/streak/level` verificados.
 
 ## Fase 5 — UI + DoD
-- [ ] T10 UI `/lesson`: chat, respuesta, corrección visible, Next ajustado
+- [x] T10 UI `/lesson`: chat, respuesta, corrección visible, Next ajustado
   - Aceptación: manual + Playwright MCP: completar lección sin errores JS.
   - Dep: T07, T08.
-- [ ] T11 UI `/progress` + persistencia recarga
+  - Resultado: OK 2026-09-26, `/lesson` 200, ciclo next→grade→next verificado vía API, build 10/10.
+- [x] T11 UI `/progress` + persistencia recarga
   - Aceptación: recargar no pierde datos (lee de DB), racha y tiempo visibles.
   - Dep: T09.
+  - Resultado: OK 2026-09-26, `/progress` 200, `POST /api/session 90s` → streak:1 timeSec:90 (limpiado a 0 tras test).
 - [ ] T12 Deploy prod Vercel + verificación DoD MVP
   - Aceptación: URL prod carga, ciclo completo en prod, `CHANGELOG` y `TASKS` al día.
   - Dep: T10, T11.
